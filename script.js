@@ -8,6 +8,8 @@ const page2 = document.getElementById('page2');
 // Variables del DOM - Página 2
 const lilyImage = document.getElementById('lilyImage');
 const lilyStars = document.getElementById('lilyStars');
+const buyButton = document.getElementById('buyButton');
+const successMessage = document.getElementById('successMessage');
 
 // Sonido de error (usando Web Audio API)
 function playErrorSound() {
@@ -45,6 +47,25 @@ function playClickSound() {
     
     oscillator.start(audioContext.currentTime);
     oscillator.stop(audioContext.currentTime + 0.2);
+}
+
+// Sonido de éxito
+function playSuccessSound() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = 1000;
+    oscillator.type = 'sine';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.3);
 }
 
 // ========== PÁGINA 1: SLOPDER WEB ==========
@@ -164,6 +185,7 @@ setInterval(() => {
 // ========== PÁGINA 2: PAYASOS ==========
 
 let lilyClicked = false;
+let lilyBought = false;
 
 // Evento cuando tocas la imagen de Lily
 lilyImage.addEventListener('click', (e) => {
@@ -185,6 +207,29 @@ lilyImage.addEventListener('click', (e) => {
         setTimeout(() => {
             lilyClicked = false;
         }, 2000);
+    }
+});
+
+// Evento del botón COMPRAR
+buyButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    
+    if (!lilyBought) {
+        lilyBought = true;
+        
+        // Reproducir sonido de éxito
+        playSuccessSound();
+        
+        // Mostrar mensaje de éxito
+        successMessage.style.display = 'block';
+        
+        // Desabilitar botón
+        buyButton.disabled = true;
+        buyButton.style.opacity = '0.6';
+        buyButton.textContent = 'COMPRADO';
+        
+        // Mostrar estrellas automáticamente
+        lilyStars.style.display = 'flex';
     }
 });
 
