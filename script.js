@@ -71,6 +71,13 @@ function typeMessage(message, speed = 50) {
     });
 }
 
+// Cargar la página de payasos
+function loadClownsPage() {
+    // Guardar estado
+    sessionStorage.setItem('showClowns', 'true');
+    window.location.href = 'clowns.html';
+}
+
 // Evento del botón ENTRAR
 enterButton.addEventListener('click', async () => {
     const email = emailInput.value.trim();
@@ -104,7 +111,11 @@ enterButton.addEventListener('click', async () => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     playErrorSound();
     await typeMessage(`\n⚠️ CONEXIÓN ESTABLECIDA ⚠️\n`, 60);
-    await typeMessage(`Los payasos falsos te han aceptado en su red...\n`, 50);
+    await typeMessage(`Los payasos te han aceptado en su red...\n`, 50);
+    
+    // Esperar un segundo y cargar la página de payasos
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    loadClownsPage();
 });
 
 // Permitir ENTER para enviar
@@ -132,6 +143,8 @@ document.addEventListener('mousemove', (e) => {
     // Efecto sutil de distorsión
     if (Math.random() > 0.98) {
         const title = document.querySelector('.title-horror');
-        title.style.transform = `translate(${Math.random() * 3}px, ${Math.random() * 3}px)`;
+        if (title) {
+            title.style.transform = `translate(${Math.random() * 3}px, ${Math.random() * 3}px)`;
+        }
     }
 });
