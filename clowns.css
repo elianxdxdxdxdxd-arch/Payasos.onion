@@ -1,0 +1,278 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    overflow: auto;
+    min-height: 100vh;
+    background: #000;
+}
+
+/* Fondo terrorífico animado */
+.background-terror {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #1a0000, #330000, #1a0000, #000);
+    background-size: 400% 400%;
+    animation: terrorBackground 15s ease infinite;
+    z-index: -1;
+}
+
+@keyframes terrorBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Efecto de sangre/manchas */
+.background-terror::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(139, 0, 0, 0.2) 20%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.15) 25%, transparent 55%),
+        radial-gradient(circle at 40% 20%, rgba(0, 0, 0, 0.3) 30%, transparent 60%);
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.95;
+    }
+}
+
+.clowns-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título */
+.title-payasos {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #ff0000;
+    text-shadow: 
+        0 0 10px rgba(255, 0, 0, 0.8),
+        0 0 20px rgba(255, 0, 0, 0.6),
+        0 0 30px rgba(139, 0, 0, 0.8),
+        2px 2px 4px rgba(0, 0, 0, 0.9);
+    letter-spacing: 5px;
+    animation: glitchEffect 3s ease-in-out infinite;
+    font-family: 'Impact', sans-serif;
+    margin-bottom: 60px;
+}
+
+@keyframes glitchEffect {
+    0%, 100% {
+        transform: translate(0);
+        text-shadow: 
+            0 0 10px rgba(255, 0, 0, 0.8),
+            0 0 20px rgba(255, 0, 0, 0.6),
+            0 0 30px rgba(139, 0, 0, 0.8);
+    }
+    25% {
+        transform: translate(-2px, 2px);
+        text-shadow: 
+            0 0 10px rgba(0, 255, 255, 0.6),
+            0 0 20px rgba(255, 0, 0, 0.4);
+    }
+    50% {
+        transform: translate(2px, -2px);
+    }
+    75% {
+        transform: translate(-1px, -2px);
+        text-shadow: 
+            0 0 10px rgba(255, 0, 0, 0.8),
+            0 0 20px rgba(255, 100, 0, 0.5);
+    }
+}
+
+/* Grid de payasos */
+.clowns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 40px;
+}
+
+/* Tarjeta de payaso */
+.clown-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 3px solid #ff0000;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 
+        0 0 20px rgba(255, 0, 0, 0.5),
+        inset 0 0 20px rgba(139, 0, 0, 0.3);
+    animation: pulseCard 2s ease-in-out infinite;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+@keyframes pulseCard {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(255, 0, 0, 0.5),
+            inset 0 0 20px rgba(139, 0, 0, 0.3);
+    }
+    50% {
+        box-shadow: 
+            0 0 40px rgba(255, 0, 0, 0.8),
+            inset 0 0 30px rgba(139, 0, 0, 0.5);
+    }
+}
+
+.clown-card:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 0 40px rgba(255, 0, 0, 0.9),
+        0 0 60px rgba(255, 100, 0, 0.6);
+}
+
+/* Contenedor de imagen */
+.clown-image-container {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid #ff6600;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.clown-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.clown-image:hover {
+    transform: scale(1.05);
+}
+
+/* Info del payaso */
+.clown-info {
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
+}
+
+.clown-info h3 {
+    font-size: 2rem;
+    color: #ff6600;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 100, 0, 0.8);
+}
+
+.price {
+    font-size: 1.8rem;
+    color: #00ff00;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+}
+
+.weight {
+    font-size: 1.1rem;
+    color: #ffff00;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.6);
+}
+
+/* Estrellas */
+.stars-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    animation: starsAppear 0.5s ease-out;
+}
+
+@keyframes starsAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.star {
+    font-size: 2rem;
+    color: #000000;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: starTwinkle 0.6s ease-in-out infinite;
+}
+
+.star:nth-child(1) {
+    animation-delay: 0s;
+}
+.star:nth-child(2) {
+    animation-delay: 0.1s;
+}
+.star:nth-child(3) {
+    animation-delay: 0.2s;
+}
+.star:nth-child(4) {
+    animation-delay: 0.3s;
+}
+.star:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+@keyframes starTwinkle {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+    50% {
+        opacity: 0.5;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .title-payasos {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .clowns-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .clown-image-container {
+        height: 200px;
+    }
+}
