@@ -9,7 +9,8 @@
 <body>
     <div class="background-terror"></div>
     
-    <div class="container">
+    <!-- PÁGINA 1: SLOPDER WEB -->
+    <div id="page1" class="container">
         <h1 class="title-horror">SLOPDER WEB</h1>
         
         <div class="form-container">
@@ -30,6 +31,32 @@
         
         <div id="messageContainer" class="message-container" style="display: none;">
             <!-- Los mensajes aparecerán aquí -->
+        </div>
+    </div>
+
+    <!-- PÁGINA 2: PAYASOS (Oculta inicialmente) -->
+    <div id="page2" class="clowns-container" style="display: none;">
+        <h1 class="title-payasos">PAYASOS ESPERANDO</h1>
+        
+        <div class="clowns-grid">
+            <!-- LILY -->
+            <div class="clown-card" id="lilyCard">
+                <div class="clown-image-container">
+                    <img id="lilyImage" class="clown-image" src="lily.jpg" alt="Lily">
+                </div>
+                <div class="clown-info">
+                    <h3>LILY</h3>
+                    <p class="price">$100</p>
+                    <p class="weight">Pesa: ???</p>
+                </div>
+                <div class="stars-container" id="lilyStars" style="display: none;">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+            </div>
         </div>
     </div>
 
