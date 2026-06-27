@@ -1,7 +1,13 @@
-// Variables del DOM
+// Variables del DOM - Página 1
 const emailInput = document.getElementById('emailInput');
 const enterButton = document.getElementById('enterButton');
 const messageContainer = document.getElementById('messageContainer');
+const page1 = document.getElementById('page1');
+const page2 = document.getElementById('page2');
+
+// Variables del DOM - Página 2
+const lilyImage = document.getElementById('lilyImage');
+const lilyStars = document.getElementById('lilyStars');
 
 // Sonido de error (usando Web Audio API)
 function playErrorSound() {
@@ -21,6 +27,27 @@ function playErrorSound() {
     oscillator.start(audioContext.currentTime);
     oscillator.stop(audioContext.currentTime + 0.1);
 }
+
+// Sonido al tocar
+function playClickSound() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = 800;
+    oscillator.type = 'sine';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.2);
+}
+
+// ========== PÁGINA 1: SLOPDER WEB ==========
 
 // Mostrar el botón cuando hay texto
 emailInput.addEventListener('input', (e) => {
@@ -71,11 +98,10 @@ function typeMessage(message, speed = 50) {
     });
 }
 
-// Cargar la página de payasos
-function loadClownsPage() {
-    // Guardar estado
-    sessionStorage.setItem('showClowns', 'true');
-    window.location.href = 'clowns.html';
+// Cambiar a página 2
+function showClownsPage() {
+    page1.style.display = 'none';
+    page2.style.display = 'flex';
 }
 
 // Evento del botón ENTRAR
@@ -113,9 +139,9 @@ enterButton.addEventListener('click', async () => {
     await typeMessage(`\n⚠️ CONEXIÓN ESTABLECIDA ⚠️\n`, 60);
     await typeMessage(`Los payasos te han aceptado en su red...\n`, 50);
     
-    // Esperar un segundo y cargar la página de payasos
+    // Esperar un segundo y cambiar a página de payasos
     await new Promise(resolve => setTimeout(resolve, 2000));
-    loadClownsPage();
+    showClownsPage();
 });
 
 // Permitir ENTER para enviar
@@ -135,16 +161,41 @@ setInterval(() => {
     }
 }, 2000);
 
-// Movimiento de cursor terrorífico (opcional)
-document.addEventListener('mousemove', (e) => {
-    const x = e.clientX;
-    const y = e.clientY;
+// ========== PÁGINA 2: PAYASOS ==========
+
+let lilyClicked = false;
+
+// Evento cuando tocas la imagen de Lily
+lilyImage.addEventListener('click', (e) => {
+    e.stopPropagation();
     
-    // Efecto sutil de distorsión
-    if (Math.random() > 0.98) {
-        const title = document.querySelector('.title-horror');
-        if (title) {
-            title.style.transform = `translate(${Math.random() * 3}px, ${Math.random() * 3}px)`;
-        }
+    if (!lilyClicked) {
+        lilyClicked = true;
+        
+        // Reproducir sonido
+        playClickSound();
+        
+        // Mostrar estrellas
+        lilyStars.style.display = 'flex';
+        
+        // Animar la imagen
+        lilyImage.style.animation = 'imageShake 0.5s ease-in-out';
+        
+        // Después de 2 segundos, permitir hacer click de nuevo
+        setTimeout(() => {
+            lilyClicked = false;
+        }, 2000);
     }
 });
+
+// Agregar la animación de shake a CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes imageShake {
+        0%, 100% { transform: translate(0); }
+        25% { transform: translate(-5px, -5px); }
+        50% { transform: translate(5px, 5px); }
+        75% { transform: translate(-5px, 5px); }
+    }
+`;
+document.head.appendChild(style);
