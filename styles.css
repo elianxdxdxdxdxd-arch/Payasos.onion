@@ -316,6 +316,10 @@ body {
     border: 2px solid #ff6600;
     position: relative;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .clown-image {
@@ -328,6 +332,22 @@ body {
 
 .clown-image:hover {
     transform: scale(1.05);
+}
+
+/* Estilo especial para imagen de signo de interrogación */
+.surprise-image {
+    object-fit: contain;
+    font-size: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    background: rgba(255, 100, 0, 0.1);
+}
+
+.surprise-image:hover {
+    transform: scale(1.1) rotate(5deg);
 }
 
 /* Info del payaso */
