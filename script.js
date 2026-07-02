@@ -6,11 +6,17 @@ const page1 = document.getElementById('page1');
 const page2 = document.getElementById('page2');
 const page3 = document.getElementById('page3');
 
-// Variables del DOM - Página 2
+// Variables del DOM - Página 2 (LILY)
 const lilyImage = document.getElementById('lilyImage');
 const lilyStars = document.getElementById('lilyStars');
 const buyButton = document.getElementById('buyButton');
 const successMessage = document.getElementById('successMessage');
+
+// Variables del DOM - Página 2 (PAYASO SORPRESA)
+const surpriseImage = document.getElementById('surpriseImage');
+const surpriseStars = document.getElementById('surpriseStars');
+const buyButtonSurprise = document.getElementById('buyButtonSurprise');
+const successMessageSurprise = document.getElementById('successMessageSurprise');
 
 // Sonido de error (usando Web Audio API)
 function playErrorSound() {
@@ -229,8 +235,15 @@ setInterval(() => {
 
 // ========== PÁGINA 2: PAYASOS ==========
 
+// Variables de estado para LILY
 let lilyClicked = false;
 let lilyBought = false;
+
+// Variables de estado para PAYASO SORPRESA
+let surpriseClicked = false;
+let surpriseBought = false;
+
+// ========== LILY ==========
 
 // Evento cuando tocas la imagen de Lily
 lilyImage.addEventListener('click', (e) => {
@@ -255,7 +268,7 @@ lilyImage.addEventListener('click', (e) => {
     }
 });
 
-// Evento del botón COMPRAR
+// Evento del botón COMPRAR de Lily
 buyButton.addEventListener('click', (e) => {
     e.stopPropagation();
     
@@ -275,6 +288,54 @@ buyButton.addEventListener('click', (e) => {
         
         // Mostrar estrellas automáticamente
         lilyStars.style.display = 'flex';
+    }
+});
+
+// ========== PAYASO SORPRESA ==========
+
+// Evento cuando tocas la imagen del Payaso Sorpresa
+surpriseImage.addEventListener('click', (e) => {
+    e.stopPropagation();
+    
+    if (!surpriseClicked) {
+        surpriseClicked = true;
+        
+        // Reproducir sonido
+        playClickSound();
+        
+        // Mostrar estrellas
+        surpriseStars.style.display = 'flex';
+        
+        // Animar la imagen
+        surpriseImage.style.animation = 'imageShake 0.5s ease-in-out';
+        
+        // Después de 2 segundos, permitir hacer click de nuevo
+        setTimeout(() => {
+            surpriseClicked = false;
+        }, 2000);
+    }
+});
+
+// Evento del botón COMPRAR del Payaso Sorpresa
+buyButtonSurprise.addEventListener('click', (e) => {
+    e.stopPropagation();
+    
+    if (!surpriseBought) {
+        surpriseBought = true;
+        
+        // Reproducir sonido de éxito
+        playSuccessSound();
+        
+        // Mostrar mensaje de éxito
+        successMessageSurprise.style.display = 'block';
+        
+        // Desabilitar botón
+        buyButtonSurprise.disabled = true;
+        buyButtonSurprise.style.opacity = '0.6';
+        buyButtonSurprise.textContent = 'COMPRADO';
+        
+        // Mostrar estrellas automáticamente
+        surpriseStars.style.display = 'flex';
     }
 });
 
